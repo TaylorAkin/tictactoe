@@ -1,0 +1,12 @@
+html, body {
+
+    height: 100%;
+
+}
+
+#container100 {
+
+    min-height: 70%;
+    height: 70%;
+
+}
