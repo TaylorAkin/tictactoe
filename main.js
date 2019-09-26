@@ -1,30 +1,36 @@
 
+var player = 0;
+
+
+
+
+
 function creategame() {
 
 
-//creating UI tags to HTML, outlining the board with divs
+    //UI for the game. Setting up the grid and divs for the different elements
 
     var container = document.createElement("div");
     container.id = "container100";
     container.className = "container d-flex flex-column mt-1 align-self-center";
 
     var titlerow = document.createElement("div");
-    titlerow.setAttribute('class','row mt-5 ml-5 mb-3 display-3');
+    titlerow.setAttribute('class', 'row mt-5 ml-5 mb-3 display-3');
     titlerow.innerHTML = "TIC-TAC-TOE";
 
     var boardrow = document.createElement("div");
-    boardrow.setAttribute('class','row d-flex flex-grow-1');
-    
-    
-    //loop creating the 9 column divs
-    var i= 0
+    boardrow.setAttribute('class', 'row d-flex flex-grow-1');
+
+
+    //loop creating the 9 column divs for the board
+    var i = 0
     while (i < 9) {
         var tile = document.createElement("div");
-        tile.setAttribute('class','col-4 flex-grow-1 border');
-        tile.innerHTML= 'hello';
+        tile.addEventListener('click', playerstate);
+        tile.setAttribute('class', 'col-4 flex-grow-1 border');
         boardrow.appendChild(tile);
-        
-        
+
+
         console.log(i);
         i++;
     }
@@ -50,22 +56,31 @@ function creategame() {
     resetbtn.className = "btn btn-primary btn-lg btn-block mt-3";
     resetbtn.innerHTML = "RESET";
 
-
-    
-    
-
-
-    
+    //appending up the chain, then up to the html
     container.appendChild(titlerow);
     container.appendChild(boardrow);
     infocol2.appendChild(resetbtn);
     inforow.appendChild(infocol1);
     inforow.appendChild(infocol2);
     inforow.appendChild(infocol3);
-
     infocontainer.appendChild(inforow);
+
     document.getElementById('app').appendChild(container);
     document.getElementById('app').appendChild(infocontainer);
-    
+
+
+
+}
+
+function playerstate() {
+    if (player === 0) {
+        player = 1;
+        this.innerHTML = 'X';
+        document.getElementById('turntxt').innerHTML = 'O';
+    } else {
+        player = 0;
+        this.innerHTML = 'O';
+        document.getElementById('turntxt').innerHTML = 'X';
+    }
 
 }
