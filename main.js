@@ -1,8 +1,13 @@
 
-var player = 0;
+var player = 1;
 
+var turnNames = ["O", "X"];
 
+var nextPlayer = 2;
 
+var board = [];
+
+var wins = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
 
 
 function creategame() {
@@ -15,11 +20,11 @@ function creategame() {
     container.className = "container d-flex flex-column mt-1 align-self-center";
 
     var titlerow = document.createElement("div");
-    titlerow.setAttribute('class', 'row mt-5 ml-5 mb-3 display-3');
+    titlerow.setAttribute('class', 'row mt-5 mb-3 display-3 justify-content-center');
     titlerow.innerHTML = "TIC-TAC-TOE";
 
     var boardrow = document.createElement("div");
-    boardrow.setAttribute('class', 'row d-flex flex-grow-1');
+    boardrow.setAttribute('class', 'row d-flex flex-grow-1 justify-content-center');
 
 
     //loop creating the 9 column divs for the board
@@ -27,11 +32,13 @@ function creategame() {
     while (i < 9) {
         var tile = document.createElement("div");
         tile.addEventListener('click', playerstate);
-        tile.setAttribute('class', 'col-4 flex-grow-1 border');
+        tile.setAttribute('class', 'col-4 border display-4 justify-content-center mx-0');
+        tile.id = i;
+        board.push(0);
         boardrow.appendChild(tile);
 
 
-        console.log(i);
+        console.log(board);
         i++;
     }
 
@@ -54,7 +61,11 @@ function creategame() {
 
     var resetbtn = document.createElement("button");
     resetbtn.className = "btn btn-primary btn-lg btn-block mt-3";
+    resetbtn.id = 'resetappear';
     resetbtn.innerHTML = "RESET";
+    resetbtn.addEventListener('click', resetstate,);
+
+
 
     //appending up the chain, then up to the html
     container.appendChild(titlerow);
@@ -73,14 +84,138 @@ function creategame() {
 }
 
 function playerstate() {
-    if (player === 0) {
-        player = 1;
-        this.innerHTML = 'X';
-        document.getElementById('turntxt').innerHTML = 'O';
+
+    if (player === 1) {
+        player = 2;
+        nextPlayer = 1;
+        board[`${this.id}`] = 1;
+        console.log(board);
     } else {
-        player = 0;
-        this.innerHTML = 'O';
-        document.getElementById('turntxt').innerHTML = 'X';
+        player = 1;
+        nextPlayer = 2;
+        board[`${this.id}`] = 2;
+        // board['tile'] = 2;   
+        console.log(board);
     }
+    this.innerHTML = turnNames[player - 1];
+    document.getElementById('turntxt').innerHTML = turnNames[nextPlayer - 1];
+    this.removeEventListener('click', playerstate);
+    // board['tile'] = player;
+     resetDisplay();
+    winner_tie();
 
 }
+
+function resetstate() {
+
+    document.getElementById('app').innerHTML = " ";
+
+    player = 1;
+
+    nextPlayer = 2;
+    creategame();
+
+    // document.getElementById('app').reset();
+
+}
+
+function checkValues(a, b, c) {
+    if (a == 0 || b == 0 || c == 0) {
+        return 0;
+    }
+    var sum = a + b + c;
+    if (sum == 6) {
+        return 1;
+    }
+    if (sum == 3) {
+        return 2;
+    }
+    return 0;
+}
+
+function winner_tie() {
+
+    console.log(board[0] + board[1] + board[2]);
+
+
+    // loop thru wins
+    for (var i = 0; i < wins.length; i++) {
+        var a = checkValues(board[wins[i][0]], board[wins[i][1]], board[wins[i][2]]);
+        if (a == 1) {
+            alert("Player O won!");
+            endgame();
+
+
+        }
+        else if (a == 2) {
+            alert("Player X won!")
+            endgame();
+        }
+
+        else if (board[0] + board[1] + board[2] + board[3] + board[4] +board[5] +board[6] +board[7] +board[8] == 13 ) {
+            alert("It's a Tie!");
+            endgame();
+
+        }
+      
+
+        }
+    }
+
+
+
+    function resetDisplay ( ) {
+        const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+        var sum = board.reduce(reducer);
+        if (sum > 11){
+
+            document.getElementById("resetappear").style.display = "block";
+
+        }
+       
+
+    }
+
+
+
+function endgame() {
+    document.getElementById('app').innerHTML = " ";
+
+    player = 1;
+
+    nextPlayer = 2;
+
+    board = [];
+
+    resetstate();
+
+    creategame();
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
