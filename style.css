@@ -1,4 +1,4 @@
-html, body {
+html, body, #app {
 
     height: 100%;
 
@@ -6,7 +6,26 @@ html, body {
 
 #container100 {
 
-    min-height: 70%;
-    height: 70%;
+    min-height: 80%;
+    height: 80%;
+    min-width: 50%;
+    width: 50%;
 
+}
+
+#infocontainer {
+    min-height: 30%;
+    height: 30%
+
+}
+
+.col-4 {
+
+    /* height: 130px;
+    width: auto; */
+
+}
+
+#resetappear {
+    display: none;
 }
