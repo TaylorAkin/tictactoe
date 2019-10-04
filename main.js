@@ -1,3 +1,6 @@
+var sum = 0;
+
+var counter = 0;
 
 var player = 1;
 
@@ -38,7 +41,6 @@ function creategame() {
         boardrow.appendChild(tile);
 
 
-        console.log(board);
         i++;
     }
 
@@ -89,13 +91,11 @@ function playerstate() {
         player = 2;
         nextPlayer = 1;
         board[`${this.id}`] = 1;
-        console.log(board);
     } else {
         player = 1;
         nextPlayer = 2;
         board[`${this.id}`] = 2;
         // board['tile'] = 2;   
-        console.log(board);
     }
     this.innerHTML = turnNames[player - 1];
     document.getElementById('turntxt').innerHTML = turnNames[nextPlayer - 1];
@@ -115,32 +115,33 @@ function resetstate() {
     nextPlayer = 2;
     creategame();
 
-    // document.getElementById('app').reset();
 
 }
 
 function checkValues(a, b, c) {
+
+    //so we know that all the boxes have been filled
     if (a == 0 || b == 0 || c == 0) {
         return 0;
     }
-    var sum = a + b + c;
+     sum = a + b + c;
     if (sum == 6) {
         return 1;
     }
     if (sum == 3) {
         return 2;
     }
-    return 0;
+    //-1 so it doesnt return 0 and the tie condition can run
+    return -1;
 }
 
 function winner_tie() {
-
-    console.log(board[0] + board[1] + board[2]);
 
 
     // loop thru wins
     for (var i = 0; i < wins.length; i++) {
         var a = checkValues(board[wins[i][0]], board[wins[i][1]], board[wins[i][2]]);
+        console.log(a);
         if (a == 1) {
             alert("Player O won!");
             endgame();
@@ -152,12 +153,17 @@ function winner_tie() {
             endgame();
         }
 
-        else if (board[0] + board[1] + board[2] + board[3] + board[4] +board[5] +board[6] +board[7] +board[8] == 13 ) {
+        else if (board[0] + board[1] + board[2] + board[3] + board[4] +board[5] +board[6] +board[7] +board[8] == 13 && a ==  0 ) {
             alert("It's a Tie!");
             endgame();
 
         }
-      
+        // else if (-1) {
+
+        //     counter++
+        // }
+        
+    
 
         }
     }
